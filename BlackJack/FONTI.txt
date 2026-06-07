@@ -1,0 +1,44 @@
+FONTI E DESCRIZIONE DEL PROGETTO IN TOTALE TRASPARENZA:
+
+
+
+
+Per questo progetto ho utilizzato 2 fonti: l'intelligenza artificiale per documentarmi, avere esempi, generazione codice + immagini e debug, e un sito per il set di immagini di carte.
+Di seguito vengono riportati gli utilizzi fatti:
+
+
+
+
+1. Chiarire concetti... public enum GameState + timerStato:
+ - iniziato il progetto è subito sorto il problema della gestione degli stati del gioco e della gestione dell'attesa dell'input dell'utente. Per risolvere ho chiesto ad AI e mi ha consigliato l'utilizzo di classe enum per gestire gli stati del gioco e timerStato per l'attesa ad esempio di un secondo dall'inizio della partita ( + tutti gli altri momenti)
+
+
+2. Generazioni di immagini
+ - La foto home quando si apre il gioco è generata con NanoBanana
+ - Idem per il tavolo di sfondo
+ - Idem per i "Display" posti sul tavolo
+
+
+3. Righe sparse con piccole funzioni:
+ - Nel codice sono presenti svariate righe che mi sono fatto dare da AI per capire come gestire le specifiche funzioni. TUTTE LE RIGHE SONO STATE COMMENTATE NEL CODICE. Ecco degli esempi di righe:
+ - float y = Gdx.graphics.getHeight() - Gdx.input.getY(); //AI
+ - bancoTexture.get(0).dispose(); // AI: Libera la memoria della vecchia texture (il retro della carta)
+ - public void dispose() { //DISPOSE FATTO CON AI PER TROVARE TUTTE LE VARIABILI SU CUI FARE DISPOSE
+ - private void resetPartita(boolean restartCompleto) { //AI PER TROVARE TUTTE LE VARIABILI DA RESETTARE
+
+
+4. Audio
+ - Ho riscontrato problemi con i file e ho usato l'AI per debug (alla fine era il file memorizzato a 24 bit al posto di 8 o 16)
+
+
+5. classDiagram
+ - Il class diagram è generato dall'AI per risparmiare ore di lavoro da reinvestire nel codice
+
+
+6. UnitTest
+ - Ho fatto generare all'ai la struttura degli user test perché non mi ricordavo più il funzionamento. Ho poi preso il codice e lo ho adattato al progetto
+ - Ho chiesto a chatGPT come implementare junit per fare i test in quanto ho avuto problemi. Mi ha detto che dovevo aggiungere delle righe al file build.gradle, e così ho fatto.
+
+
+7. Altro:
+ - Eventuali altri utilizzi di AI sono riportati tutti nei commenti del codice

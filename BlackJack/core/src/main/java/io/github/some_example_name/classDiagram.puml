@@ -1,0 +1,137 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam monochrome true
+skinparam shadowing false
+
+enum GameState {
+    HOME
+    PUNTATA
+    PRIMA_CARTA_USER
+    SECONDA_CARTA_USER
+    PRIMA_CARTA_BANCO
+    SECONDA_CARTA_BANCO
+    SCELTA_USER
+    CARTA_USER
+    CARTA_BANCO
+    SCELTA_BANCO
+    SBALLATO_USER
+    SBALLATO_BANCO
+    PESCA_BANCO
+    VINCE_BANCO
+    VINCE_USER
+    PAREGGIO
+    CONTINUAZIONE_GIOCO
+}
+
+abstract class Player {
+    - mano: ArrayList<Carta>
+    - sballato: boolean
+    + Player()
+    + riceviCarta(carta: Carta): void
+    + isBlackjack(): boolean
+    + isSballato(): boolean
+    + getPunteggio(): int
+    + setSballato(sballato: boolean): void
+    + getMano(): ArrayList<Carta>
+    + setMano(mano: ArrayList<Carta>): void
+}
+
+class User {
+    - puntata: int
+    - soldi: int
+    + User(soldi: int)
+    + getSoldi(): int
+    + setSoldi(soldi: int): void
+    + getPuntata(): int
+    + setPuntata(puntata: int): void
+}
+
+class Banco {
+    + Banco()
+}
+
+class Carta {
+    - valore: String
+    - seme: String
+    - tex_card: Texture
+    + Carta(valore: String, seme: String)
+    + getValore(): String
+    + setValore(valore: String): void
+    + getSeme(): String
+    + setSeme(seme: String): void
+    + getTex_card(): Texture
+    + setTex_card(tex_card: Texture): void
+    + toString(): String
+    + formatta(): String
+}
+
+class Mazzo {
+    - mazzo: ArrayList<Carta>
+    - {static} VALORI: ArrayList<String>
+    - {static} SEMI: ArrayList<String>
+    + Mazzo()
+    + pescaCarta(): Carta
+}
+
+class MainGame {
+    - batch: SpriteBatch
+    - font: BitmapFont
+    - background: Texture
+    - display1: Texture
+    - display2: Texture
+    - display3: Texture
+    - display4: Texture
+    - display5: Texture
+    - display6: Texture
+    - displayBig: Texture
+    - homeTex: Texture
+    - modNormale: Rectangle
+    - modDifficile: Rectangle
+    - mod: String
+    - userTexture: ArrayList<Texture>
+    - bancoTexture: ArrayList<Texture>
+    - ombra: Texture
+    - timerStato: float
+    - selezione: int
+    - musicaLobby: Sound
+    - soundCarta: Sound
+    - soundVincita: Sound
+    - soundPerdita: Sound
+    - soundFiche: Sound
+    - puntataMomentanea: int
+    - fiche: Texture
+    - mostraFiche: boolean
+    - thereIsBJ: boolean
+    - bjX: float
+    - bjY: float
+    - bjVX: float
+    - bjVY: float
+    - displayBigRect: Rectangle
+    - pagamento: String
+
+    + create(): void
+    + render(): void
+    + dispose(): void
+    - renderCarte(): void
+    + continuazioneGioco(dt: float): void
+    - pagaRisultato(): void
+    - salvaSoldi(): void
+    - caricaSoldi(): void
+    - resetPartita(restartCompleto: boolean): void
+}
+
+' Relazioni di Ereditarietà
+Player <|-- User
+Player <|-- Banco
+
+' Relazioni di Aggregazione e Composizione
+Player "1" o-- "*" Carta : contiene nella mano
+Mazzo "1" o-- "*" Carta : composto da
+
+' Relazioni del MainGame (Associazioni e dipendenze)
+MainGame "1" --> "1" GameState : gestisce lo stato corrente
+MainGame "1" --> "1" Mazzo : usa per distribuire
+MainGame "1" --> "1" Banco : controlla il dealer
+MainGame "1" --> "1" User : gestisce il giocatore
+
+@endum
